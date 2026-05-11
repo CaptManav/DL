@@ -33,3 +33,25 @@ model.fit(X_train, y_train, epochs=3)
 loss, accuracy = model.evaluate(X_test, y_test)
 
 print("Accuracy:", accuracy)
+
+#Confusion Matrix
+import numpy as np
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Make predictions on the test data
+y_pred_probs = model.predict(X_test)
+y_pred = np.argmax(y_pred_probs, axis=1)
+
+# Generate the confusion matrix
+conf_matrix = confusion_matrix(y_test, y_pred)
+
+# Plot the confusion matrix
+plt.figure(figsize=(10, 8))
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues',
+            xticklabels=range(10), yticklabels=range(10))
+plt.xlabel('Predicted Label')
+plt.ylabel('True Label')
+plt.title('Confusion Matrix for MNIST Classification')
+plt.show()
